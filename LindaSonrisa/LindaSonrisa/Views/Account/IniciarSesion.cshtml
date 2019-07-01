@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewBag.Title = "IniciarSesion";
+}
+
+<h2>IniciarSesion</h2>
+
+<form action="/Account/IniciarSesion" onsubmit="return InicioSesion();" method="post">
+    <div class="form-group">
+        <label for="Email1">Email</label>
+        <input type="email" name="Email" id="Email" class="form-control" placeholder="Ingrese Email" />
+    </div>
+    <div class="form-group">
+        <label for="Contrasinia">Contraseña</label>
+        <input type="password" name="password" id="password" value="" class="form-control" placeholder="Ingrese Contraseña" />
+
+    </div>
+    <input type="hidden" name="id" value="@ViewBag.ID" />
+    <button class="btn btn-info">Iniciar Sesion</button>
+</form>
+
+@if ( ViewBag.ISFallo == "Falló")
+{
+    <script type="text/javascript">
+        swal("Intente Nuevamente", "La contraseña y/o Correo no Coinciden", "warning");
+    </script>
+}

@@ -1,0 +1,24 @@
+﻿@model IEnumerable<LindaSonrisa.Models.Schedule.Servicio>
+
+
+@{
+    ViewBag.Title = "Index";
+}
+
+    <h2>Seleccione Especialidad</h2>
+
+    <br />
+    <table class="table">
+       
+    @foreach (var item in Model)
+    {
+
+        <tr>
+            <td>     
+               <button onclick="location.href='@Url.Action("Reserve", "Schedule", new {id = item.ServicioId})';return false;" type="button" class="btn btn-primary btn-lg btn-block">@Html.DisplayFor(modelItem => item.Descripcion) </button>
+                
+            </td>
+        </tr>
+    }
+
+    </table>

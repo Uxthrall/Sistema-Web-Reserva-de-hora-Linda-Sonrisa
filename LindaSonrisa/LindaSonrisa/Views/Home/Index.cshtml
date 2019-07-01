@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+    <div class="jumbotron p-0">
+
+        <!-- Card image -->
+        <div class="view overlay rounded-top">
+            <img src="https://www.ula.edu.mx/images/oferta_academica/modalidad_presencial/posgrados_presenciales/maestrias/ula_posgrados_maestrias_odontologia_01.jpg" class="img-fluid" alt="Sample image" style="width:1020px;height:400px;">
+            <a href="#">
+                <div class="mask rgba-white-slight"></div>
+            </a>
+        </div>
+
+    </div>
+
+<div class="row">
+
+    <div class="col-md-6">
+        <div class="card text-center">
+            <div class="card-header">
+                <h2> Registrar Hora</h2>
+            </div>
+            <div class="card-body ">
+                <h5 class="card-title">Servicios Odontológicos</h5>
+                <p class="card-text">Asignar hora para su pronto tratamiento odontologico </p>
+                <p><a class="btn btn-primary btn-lg" href="/Schedule/Sched">Reservar &raquo;</a></p>
+            </div>
+        </div>
+        
+    </div>
+
+
+
+    <div class="col-md-6">
+        <div class="card text-center">
+            <div class="card-header">
+                <h2>Listado De Reservas</h2>
+            </div>
+            <div class="card-body ">
+                <h5 class="card-title">Reservas</h5>
+                <p class="card-text">Reservas efecutuadas y las pronto a realizar</p>
+                <p><a class="btn btn-primary btn-lg" href="/MyReserve/Search">Buscar &raquo;</a></p>
+            </div>
+        </div>      
+    </div>
+</div>
+
+       
+
+        @if (ViewBag.Exito == "Exito")
+        {
+            <script type="text/javascript">
+                swal("Registrado!", "La reserva se llevo a cabo con Exito", "success");
+            </script>
+        }

@@ -1,0 +1,95 @@
+﻿@model IEnumerable<LindaSonrisa.Models.Schedule.Reserve>
+
+@{
+    ViewBag.Title = "Search";
+}
+
+<h2>Listado de Reservas</h2>
+
+<div class="row">
+
+    <div class="form-group col-md-4">
+        <h4>@ViewBag.RutApoderado</h4>
+
+    </div>
+    <br />
+    <div class="col-md-8">
+
+        @if (ViewBag.Listar == "Listar")
+        {
+            foreach (var item in Model)
+            {
+               
+
+                    <div class="card">
+                        <div class="card-header">
+                            ID Reserva: @item.Id_reserva <br />
+                            @item.Fecha.ToString().Substring(0, 10) a las @item.Hora
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">@item.Servicio</h5>
+                            <p class="card-text">Nombre Profesional: @item.NomProfesional</p>
+                            <p class="card-text">Nombre Paciente: @item.Nom_paciente</p>
+                            <p class="card-text">Nombre Apoderado: @Session["Login"]</p>
+
+                            @if (@item.Fecha >= Convert.ToDateTime(ViewBag.dia_hoy))
+                            {
+                                <form action="/MyReserve/Cancel" id="@item.Id_reserva" method="post">
+                                    <input type="hidden" name="id_reserva" value="@item.Id_reserva" />
+                                    <input type="hidden" name="dia" value=" @item.Fecha.ToString().Substring(0,10)" />
+                                    <input type="hidden" name="hora" value="@item.Hora" />
+                                    <input type="hidden" name="rut_profesional" value="@item.ProfesionalRut" />
+
+                                    <input type='button' onclick="confirmar(@item.Id_reserva)" value="Cancelar Reserva" class="btn btn-danger">
+                                </form>
+                            }
+                            else
+                            {
+                                <form action="/MyReserve/Ticket" method="post">
+                                    <input type="hidden" name="id_reserva" value="@item.Id_reserva" />
+                                    <input type="hidden" name="rut_apoderado" value=" @item.ApoderadoRut" />
+
+                                    <input type="hidden" name="dia" value=" @item.Fecha.ToString().Substring(0,10)" />
+                                    <input type="hidden" name="hora" value="@item.Hora" />
+                                    <input type="hidden" name="servicio" value="@item.Servicio" />
+                                    <input type="hidden" name="NomProfesional" value="@item.NomProfesional" />
+
+                                    <button class="btn btn-success">Enviar Boleta</button>
+                                </form>
+                            }
+
+
+        </div>
+    </div>
+    <br />
+
+
+}
+}
+
+    </div>
+</div>
+
+<script type="text/javascript">
+    function confirmar(mesnaje) {
+        swal({
+            title: "Seguro Quieres Eliminar?" + mesnaje,
+            text: "Al eliminar la hora quedará disponible para su pronta reserva",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    document.getElementById(mesnaje).submit();
+                } else {
+                    swal("Tu reserva se encuentra segura!");
+                }
+            });
+    }
+</script>
+
+
+
+
+

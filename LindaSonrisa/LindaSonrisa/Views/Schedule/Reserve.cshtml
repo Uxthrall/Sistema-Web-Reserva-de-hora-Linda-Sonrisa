@@ -1,0 +1,79 @@
+﻿@model IEnumerable<LindaSonrisa.Models.Schedule.Horas>
+@{
+    ViewBag.Title = "Reserve";
+}
+
+
+<br />
+<br />
+<h4>Seleccione Hora</h4>
+<br />
+<div class="row">
+
+    <div class="form-group col-md-4">
+        <form action="/schedule/Reserve" onsubmit="return SeleccionFecha();" method="post">
+            <input type="hidden" name="id" value="@ViewBag.id_servicio" />
+            <input type="date" name="day" id="day" max="2022-07-31" min="@ViewBag.dia" class="form-control">
+            <!------------------<input type="date" name="day" id="day" max="2022-07-31"  class="form-control">-->
+            <button class="btn btn-info">Buscar Hora</button>
+        </form>
+        </div>
+
+
+
+            <div class="col-md-8">
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Hora</th>
+                            <th scope="col">Disponibilidad</th>
+                            <th scope="col">Profesional</th>
+                            <th scope="col">Registrar</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @if ( ViewBag.buscar == "Mostrar")
+                        {
+                            foreach (var item in Model)
+                            {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.Hora)</td>
+                                @if (item.Reservada == 0)
+                                {
+                                    <td> <h6><span class="label label-info">Disponible</span></h6></td>
+                                    <td>@Html.DisplayFor(modelItem => item.Nom_prof)</td>
+                                    <td>
+                                        <form action="/schedule/Register" method="post">
+                                            <input type="hidden" name="id_servicio" value="@ViewBag.id_servicio" />
+                                            <input type="hidden" name="dia" value="@item.Dia" />
+                                            <input type="hidden" name="hora" value="@item.Hora" />
+                                            <input type="hidden" name="descripcion" value="@item.Descripcion" />
+                                            <input type="hidden" name="rut" value="@item.Rut_profes" />
+                                            <input type="hidden" name="nom_prof" value="@item.Nom_prof" />
+                                            <button class="btn btn-success">Agendar</button>
+                                        </form>
+
+                                    </td>
+                                }
+                                else
+                                {
+                                     <td> <h6><span class="label label-danger">Reservada</span></h6></td>
+
+                                }
+
+                        </tr>
+                            }
+                        }
+
+
+                    </tbody>
+
+                </table>
+            </div>
+
+
+    </div>
+
+

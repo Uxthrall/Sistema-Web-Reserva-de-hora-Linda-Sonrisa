@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Mi aplicación ASP.NET</title>
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+
+</head>
+<body>
+    <div class="navbar navbar-light navbar-fixed-top " style="background-color: #d3e8ea;">
+        <div class="container">
+            <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("Linda Sonrisa", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Acerca de", "About", "Home")</li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    @if (Session["Login"] == "NO LOGEADO")
+                    {
+                        <li>@Html.ActionLink("Registrarse", "CrearCuenta", "Account")</li>
+                        <li>@Html.ActionLink("Iniciar Sesión", "IniciarSesion", "Account")</li>
+                    }
+                    else
+                    {
+                        string user = Session["Login"].ToString();
+                        int largo = user.Length;
+                        string digito = user.Substring((largo - 8), 1);
+
+                        string usuario = "";
+                        if (digito == "1" || digito == "2" || digito == "3" || digito == "4" || digito == "5" || digito == "6" || digito == "7" || digito == "8" || digito == "9")
+                        {
+                            string rut = user.Substring((largo - 8), 8);
+                            int largoUser = largo - rut.Length;
+                            usuario = user.Remove(largoUser, rut.Length);
+                        }
+                        else
+                        {
+                            string rut2 = user.Substring((largo - 7), 7);
+                            int largoUser2 = largo - rut2.Length;
+                            usuario = user.Remove(largoUser2, rut2.Length);
+                        }
+                        <li><h4 class="text-muted">@usuario</h4></li>
+                        <li>@Html.ActionLink("Cerrar Sesión", "CerrarrSesion", "Account")</li>
+                    }
+
+                </ul>
+
+            </div>         
+        </div>
+    </div>
+    <div class="container body-content bg-secondary  ">
+        @RenderBody()
+        <hr />
+
+
+
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Desarrollado por Alejandro Morales</p>
+        </footer>
+    </div>
+
+    
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
